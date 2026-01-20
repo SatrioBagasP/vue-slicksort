@@ -1,6 +1,6 @@
 {
-  "name": "vue-slicksort",
-  "version": "2.0.5",
+  "name": "@satriobagasp/vue-slicksort",
+  "version": "1.0.0",
   "description": "Set of mixins to turn any list into a sortable, touch-friendly, animated list",
   "author": {
     "name": "Jordan Simonds",
@@ -15,10 +15,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Jexordexan/vue-slicksort.git"
+    "url": "https://github.com/SatrioBagasP/vue-slicksort.git"
   },
   "bugs": {
-    "url": "https://github.com/Jexordexan/vue-slicksort/issues"
+    "url": "https://github.com/SatrioBagasP/vue-slicksort/issues"
   },
   "keywords": [
     "vue",
