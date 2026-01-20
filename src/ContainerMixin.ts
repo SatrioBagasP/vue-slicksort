@@ -252,7 +252,8 @@ export const ContainerMixin = defineComponent({
       let scrollContainer = this.container.parentElement;
       while (scrollContainer && scrollContainer !== document.body) {
         const overflowY = window.getComputedStyle(scrollContainer).overflowY;
-        if (overflowY === 'auto' || overflowY === 'scroll') {
+        const overflowX = window.getComputedStyle(scrollContainer).overflowX;
+        if (overflowY === 'auto' || overflowY === 'scroll' || overflowX === 'auto' || overflowX === 'scroll') {
           break;
         }
         scrollContainer = scrollContainer.parentElement;
@@ -572,21 +573,24 @@ export const ContainerMixin = defineComponent({
       this.minTranslate = {};
       this.maxTranslate = {};
 
+      // Use scroll container bounds instead of container bounds
+      const scrollContainerRect = this.scrollContainer.getBoundingClientRect ? this.scrollContainer.getBoundingClientRect() : containerBoundingRect;
+
       if (this._axis.x) {
         this.minTranslate.x =
-          (useWindowAsScrollContainer ? 0 : containerBoundingRect.left) - clientRect.left - this.width / 2;
+          (useWindowAsScrollContainer ? 0 : scrollContainerRect.left) - clientRect.left - this.width / 2;
         this.maxTranslate.x =
-          (useWindowAsScrollContainer ? _window.innerWidth : containerBoundingRect.left + containerBoundingRect.width) -
+          (useWindowAsScrollContainer ? _window.innerWidth : scrollContainerRect.left + scrollContainerRect.width) -
           clientRect.left -
           this.width / 2;
       }
       if (this._axis.y) {
         this.minTranslate.y =
-          (useWindowAsScrollContainer ? 0 : containerBoundingRect.top) - clientRect.top - this.height / 2;
+          (useWindowAsScrollContainer ? 0 : scrollContainerRect.top) - clientRect.top - this.height / 2;
         this.maxTranslate.y =
           (useWindowAsScrollContainer
             ? _window.innerHeight
-            : containerBoundingRect.top + containerBoundingRect.height) -
+            : scrollContainerRect.top + scrollContainerRect.height) -
           clientRect.top -
           this.height / 2;
       }
