@@ -164,7 +164,7 @@ interface ComponentData extends ComponentProps {
 
 // Export Sortable Container Component Mixin
 export const ContainerMixin = defineComponent({
-  inject: { 
+  inject: {
     SlicksortHub: {
       from: 'SlicksortHub',
       default: null,
@@ -243,7 +243,23 @@ export const ContainerMixin = defineComponent({
     this.container = this.$el;
     this.document = this.container.ownerDocument || document;
     this._window = this.contentWindow || window;
-    this.scrollContainer = this.useWindowAsScrollContainer ? { scrollLeft: 0, scrollTop: 0 } : this.container;
+
+    // Find the actual scroll container by traversing up the DOM
+    if (this.useWindowAsScrollContainer) {
+      this.scrollContainer = { scrollLeft: 0, scrollTop: 0 };
+    } else {
+      // Start from parent element to find scrollable container
+      let scrollContainer = this.container.parentElement;
+      while (scrollContainer && scrollContainer !== document.body) {
+        const overflowY = window.getComputedStyle(scrollContainer).overflowY;
+        if (overflowY === 'auto' || overflowY === 'scroll') {
+          break;
+        }
+        scrollContainer = scrollContainer.parentElement;
+      }
+      this.scrollContainer = scrollContainer || this.container;
+    }
+
     this.events = {
       start: this.handleStart,
       move: this.handleMove,
