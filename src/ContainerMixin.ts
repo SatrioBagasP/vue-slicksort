@@ -375,7 +375,7 @@ export const ContainerMixin = defineComponent({
 
     cancel() {
       if (!this.sorting) {
-        if (this.pressTimer) clearTimeout(this.pressTimer);
+        clearTimeout(this.pressTimer);
         this.manager.active = null;
         if (this.hub) this.hub.cancel();
       }
