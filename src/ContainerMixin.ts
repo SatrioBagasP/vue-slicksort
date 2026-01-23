@@ -270,7 +270,7 @@ export const ContainerMixin = defineComponent({
     for (const key in this.events) {
       if (hasOwnProperty(this.events, key)) {
         // @ts-ignore
-        events[key].forEach((eventName) => this.container.addEventListener(eventName, this.events[key]));
+         events[key].forEach((eventName) => this.container.addEventListener(eventName, this.events[key], { passive: false }));
       }
     }
 
@@ -283,7 +283,7 @@ export const ContainerMixin = defineComponent({
     for (const key in this.events) {
       if (hasOwnProperty(this.events, key)) {
         // @ts-ignore
-        events[key].forEach((eventName) => this.container.removeEventListener(eventName, this.events[key]));
+        events[key].forEach((eventName) => this.container.removeEventListener(eventName, this.events[key], { passive: false }));
       }
     }
 
@@ -451,11 +451,11 @@ export const ContainerMixin = defineComponent({
 
         this.listenerNode = isTouch(e) ? node : this._window;
         // @ts-ignore
-        events.move.forEach((eventName) => this.listenerNode.addEventListener(eventName, this.handleSortMove));
+        events.move.forEach((eventName) => this.listenerNode.addEventListener(eventName, this.handleSortMove, { passive: false }));
         // @ts-ignore
-        events.end.forEach((eventName) => this.listenerNode.addEventListener(eventName, this.handleSortEnd));
+        events.end.forEach((eventName) => this.listenerNode.addEventListener(eventName, this.handleSortEnd, { passive: false }));
         // @ts-ignore
-        events.cancel.forEach((eventName) => this.listenerNode.addEventListener(eventName, this.handleSortCancel));
+        events.cancel.forEach((eventName) => this.listenerNode.addEventListener(eventName, this.handleSortCancel, { passive: false }));
 
         this.sorting = true;
 
@@ -642,15 +642,15 @@ export const ContainerMixin = defineComponent({
       if (this.listenerNode) {
         events.move.forEach((eventName) =>
           // @ts-ignore
-          this.listenerNode.removeEventListener(eventName, this.handleSortMove),
+          this.listenerNode.removeEventListener(eventName, this.handleSortMove), { passive: false }
         );
         events.end.forEach((eventName) =>
           // @ts-ignore
-          this.listenerNode.removeEventListener(eventName, this.handleSortEnd),
+          this.listenerNode.removeEventListener(eventName, this.handleSortEnd), { passive: false }
         );
         events.cancel.forEach((eventName) =>
           // @ts-ignore
-          this.listenerNode.removeEventListener(eventName, this.handleSortCancel),
+          this.listenerNode.removeEventListener(eventName, this.handleSortCancel), { passive: false }
         );
       }
 
