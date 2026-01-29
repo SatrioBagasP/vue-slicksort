@@ -54,6 +54,30 @@ function findClosestDest(
   refs: ContainerRef[],
   currentDest: ContainerRef,
 ): ContainerRef | null {
+  // PATCH: pointer-events overlay fix
+  // Use elementFromPoint to find the real container under pointer, even if overlay exists
+  if (typeof document !== 'undefined' && document.elementFromPoint) {
+    const el = document.elementFromPoint(x, y);
+    if (el) {
+      // Try to find a ref whose container contains this element.
+      // If the container is empty (no child elements), `contains` can miss,
+      // so also match by point-in-rect, shared offsetParent, or direct equality.
+      const match = refs.find((ref) => {
+        if (!ref.container)
+          return false;
+        // Direct containment
+        if (ref.container.contains(el))
+          return true;
+        // If the element is the container itself
+        if (el === ref.container.parentNode)
+          return true;
+
+        return false;
+      });
+      if (match)
+        return match;
+    }
+  }
   // Quickly check if we are within the bounds of the current destination
   if (isPointWithinRect({ x, y }, currentDest.container.getBoundingClientRect())) {
     return currentDest;
