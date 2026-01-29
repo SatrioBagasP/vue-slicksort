@@ -1,3 +1,7 @@
+## [1.0.4](https://github.com/SatrioBagasP/vue-slicksort/compare/v1.0.3...v1.0.4) (2026-01-29)
+
+
+
 ## [1.0.3](https://github.com/SatrioBagasP/vue-slicksort/compare/v1.0.2...v1.0.3) (2026-01-23)
 
 
